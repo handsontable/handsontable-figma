@@ -1,0 +1,11 @@
+{
+  "name": "handsontable-figma",
+  "version": "1.0.0",
+  "description": "A tool for generating theme files from Figma design tokens.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Handsoncode <hello@handsontable.com>",
+  "license": "MIT"
+}

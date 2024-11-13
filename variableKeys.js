@@ -15,13 +15,18 @@ const variableKeys = [
     "placeholder-color",
     "read-only-color",
     "disabled-color",
+    // Border
+    "cell-horizontal-border-color",
+    "cell-vertical-border-color",
     // Wrapper
     "wrapper-border-width",
     "wrapper-border-radius",
     "wrapper-border-color",
     // Row odd and even
-    "row-odd-background-color",
-    "row-even-background-color",
+    "row-header-odd-background-color",
+    "row-header-even-background-color",
+    "row-cell-odd-background-color",
+    "row-cell-even-background-color",
     // Cell padding
     "cell-horizontal-padding",
     "cell-vertical-padding",
@@ -99,10 +104,13 @@ const variableKeys = [
     "icon-button-border-color",
     "icon-button-background-color",
     "icon-button-icon-color",
+    "icon-button-hover-border-color",
     "icon-button-hover-background-color",
     "icon-button-hover-icon-color",
+    "icon-active-button-border-color",
     "icon-active-button-background-color",
     "icon-active-button-icon-color",
+    "icon-active-button-hover-border-color",
     "icon-active-button-hover-background-color",
     "icon-active-button-hover-icon-color",
     // Collapse button

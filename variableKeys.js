@@ -3,7 +3,6 @@ const variableKeys = [
     "font-size",
     "line-height",
     "font-weight",
-    "row-height",
     "gap-size",
     "icon-size",
     "table-transition",

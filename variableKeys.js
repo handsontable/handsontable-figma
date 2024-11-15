@@ -48,6 +48,7 @@ const variableKeys = [
     "cell-autofill-border-radius",
     "cell-autofill-border-color",
     "cell-autofill-background-color",
+    "cell-autofill-fill-border-color",
     // Resize indicator
     "resize-indicator-color",
     // Move
@@ -89,6 +90,7 @@ const variableKeys = [
     // Header
     "header-font-weight",
     "header-foreground-color",
+    "header-row-foreground-color",
     "header-background-color",
     "header-active-border-color",
     "header-active-foreground-color",

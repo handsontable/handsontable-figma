@@ -90,7 +90,6 @@ const variableKeys = [
     // Header
     "header-font-weight",
     "header-foreground-color",
-    "header-row-foreground-color",
     "header-background-color",
     "header-active-border-color",
     "header-active-foreground-color",
@@ -99,7 +98,13 @@ const variableKeys = [
     "header-highlighted-foreground-color",
     "header-highlighted-background-color",
     "header-filter-background-color",
+    // Header row
+    "header-row-foreground-color",
     "header-row-background-color",
+    "header-row-highlighted-foreground-color",
+    "header-row-highlighted-background-color",
+    "header-row-active-foreground-color",
+    "header-row-active-background-color",
     // Icon Button
     "icon-button-border-radius",
     "icon-button-border-color",

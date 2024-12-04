@@ -85,7 +85,7 @@ function updateValues(obj, variant) {
                 prop.value = findValue(themes, prop, variant)?.value
 
                 if (prop.type === 'dimension' && typeof prop.value != 'string') {
-                    prop.value = `${prop.value}${key.includes('transition') ? 's' : "px"}`;
+                    prop.value = `${prop.value}${key.includes('transition') ? 's' : prop.value > 0 ? 'px' : ''}`;
                 }
 
                 obj[key] = prop;

@@ -1,5 +1,5 @@
 const { readFileSync, writeFileSync, existsSync, mkdirSync } = require('fs');
-const { variableKeys } = require('./variableKeys');
+const { tokensKeys } = require('./tokensKeys');
 
 const PREFIX = 'ht'
 const THEME_KEY = 'ht_themes';
@@ -151,7 +151,7 @@ Object.entries(themesContent).forEach(([themeKey, themeValues]) => {
 
         output += `@mixin ${variantKey} {\n`;
 
-        variableKeys.forEach(name => {
+        tokensKeys.forEach(name => {
             const key = `--${PREFIX}-${name}`
             const value = variantValue[key];
 

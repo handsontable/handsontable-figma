@@ -80,19 +80,24 @@ const tokensKeys = [
     "header-font-weight",
     "header-foreground-color",
     "header-background-color",
-    "header-active-border-color",
-    "header-active-foreground-color",
-    "header-active-background-color",
+    // Header highlighted
     "header-highlighted-shadow-size",
     "header-highlighted-foreground-color",
     "header-highlighted-background-color",
+    // Header active
+    "header-active-border-color",
+    "header-active-foreground-color",
+    "header-active-background-color",
+    // Header filter
     "header-filter-background-color",
 
     // Header row
     "header-row-foreground-color",
     "header-row-background-color",
+    // Header row highlighted
     "header-row-highlighted-foreground-color",
     "header-row-highlighted-background-color",
+    // Header row active
     "header-row-active-foreground-color",
     "header-row-active-background-color",
 

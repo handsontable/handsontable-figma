@@ -141,6 +141,34 @@ const tokensKeys = [
     "checkbox-indeterminate-disabled-background-color",
     "checkbox-indeterminate-disabled-icon-color",
 
+    // Radio
+    "radio-size",
+    "radio-border-radius",
+    "radio-border-color",
+    "radio-background-color",
+    "radio-icon-color",
+    // Radio focus
+    "radio-focus-border-color",
+    "radio-focus-background-color",
+    "radio-focus-icon-color",
+    "radio-focus-ring-color",
+    // Radio disabled
+    "radio-disabled-border-color",
+    "radio-disabled-background-color",
+    "radio-disabled-icon-color",
+    // Radio checked
+    "radio-checked-border-color",
+    "radio-checked-background-color",
+    "radio-checked-icon-color",
+    // Radio checked focus
+    "radio-checked-focus-border-color",
+    "radio-checked-focus-background-color",
+    "radio-checked-focus-icon-color",
+    // Radio checked disabled
+    "radio-checked-disabled-border-color",
+    "radio-checked-disabled-background-color",
+    "radio-checked-disabled-icon-color",
+
     // Icon Button
     "icon-button-border-radius",
     "icon-button-border-color",
@@ -151,13 +179,13 @@ const tokensKeys = [
     "icon-button-hover-background-color",
     "icon-button-hover-icon-color",
     // Icon Button active
-    "icon-active-button-border-color",
-    "icon-active-button-background-color",
-    "icon-active-button-icon-color",
+    "icon-button-active-border-color",
+    "icon-button-active-background-color",
+    "icon-button-active-icon-color",
     // Icon Button active hover
-    "icon-active-button-hover-border-color",
-    "icon-active-button-hover-background-color",
-    "icon-active-button-hover-icon-color",
+    "icon-button-active-hover-border-color",
+    "icon-button-active-hover-background-color",
+    "icon-button-active-hover-icon-color",
 
     // Collapse button
     "collapse-button-border-radius",

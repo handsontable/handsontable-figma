@@ -61,6 +61,13 @@ const tokensKeys = [
     "cell-autofill-background-color",
     "cell-autofill-fill-border-color",
 
+    // Cell mobile handle
+    "cell-mobile-handle-size",
+    "cell-mobile-handle-border-width",
+    "cell-mobile-handle-border-radius",
+    "cell-mobile-handle-border-color",
+    "cell-mobile-handle-background-color",
+
     // Resize indicator
     "resize-indicator-color",
 
@@ -178,14 +185,23 @@ const tokensKeys = [
     "icon-button-hover-border-color",
     "icon-button-hover-background-color",
     "icon-button-hover-icon-color",
-    // Icon Button active
+    
+    // Icon Button active new version
     "icon-button-active-border-color",
     "icon-button-active-background-color",
     "icon-button-active-icon-color",
-    // Icon Button active hover
+    // Icon Button active hover 
     "icon-button-active-hover-border-color",
     "icon-button-active-hover-background-color",
     "icon-button-active-hover-icon-color",
+    // Icon Button active
+    "icon-active-button-border-color",
+    "icon-active-button-background-color",
+    "icon-active-button-icon-color",
+    // Icon Button active hover
+    "icon-active-button-hover-border-color",
+    "icon-active-button-hover-background-color",
+    "icon-active-button-hover-icon-color",
 
     // Collapse button
     "collapse-button-border-radius",

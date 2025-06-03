@@ -48,6 +48,7 @@ const tokensKeys = [
     // Cell state
     "cell-success-background-color",
     "cell-error-background-color",
+    "cell-read-only-background-color",
 
     // Cell selection
     "cell-selection-border-color",
@@ -186,7 +187,7 @@ const tokensKeys = [
     "icon-button-hover-background-color",
     "icon-button-hover-icon-color",
     
-    // Icon Button active new version
+    // Icon Button active
     "icon-button-active-border-color",
     "icon-button-active-background-color",
     "icon-button-active-icon-color",
@@ -194,14 +195,6 @@ const tokensKeys = [
     "icon-button-active-hover-border-color",
     "icon-button-active-hover-background-color",
     "icon-button-active-hover-icon-color",
-    // Icon Button active
-    "icon-active-button-border-color",
-    "icon-active-button-background-color",
-    "icon-active-button-icon-color",
-    // Icon Button active hover
-    "icon-active-button-hover-border-color",
-    "icon-active-button-hover-background-color",
-    "icon-active-button-hover-icon-color",
 
     // Collapse button
     "collapse-button-border-radius",

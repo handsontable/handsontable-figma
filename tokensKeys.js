@@ -14,10 +14,17 @@ const tokensKeys = [
     "border-color",
     "accent-color",
     "foreground-color",
+    "foreground-secondary-color",
     "background-color",
     "placeholder-color",
     "read-only-color",
     "disabled-color",
+
+    // Shadow Variables
+    "shadow-color",
+    "shadow-x",
+    "shadow-y",
+    "shadow-blur",
 
     // Cell Border Variables
     "cell-horizontal-border-color",
@@ -158,6 +165,8 @@ const tokensKeys = [
 
     // Icon Button Variables
     "icon-button-border-radius",
+    "icon-button-large-border-radius",
+    "icon-button-large-padding",
     "icon-button-border-color",
     "icon-button-background-color",
     "icon-button-icon-color",
@@ -279,6 +288,21 @@ const tokensKeys = [
     "menu-shadow-color",
     "menu-item-hover-color",
     "menu-item-active-color",
+
+    // Dialog Variables
+    "dialog-semi-transparent-background-color",
+    "dialog-solid-background-color",
+    "dialog-content-padding-horizontal",
+    "dialog-content-padding-vertical",
+    "dialog-content-gap",
+    "dialog-content-border-radius",
+    "dialog-content-background-color",
+
+    // Pagination Variables
+    "pagination-bar-foreground-color",
+    "pagination-bar-background-color",
+    "pagination-bar-horizontal-padding",
+    "pagination-bar-vertical-padding",
 ]
 
 exports.tokensKeys = tokensKeys;

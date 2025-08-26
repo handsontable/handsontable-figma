@@ -294,7 +294,6 @@ const tokensKeys = [
     "dialog-solid-background-color",
     "dialog-content-padding-horizontal",
     "dialog-content-padding-vertical",
-    "dialog-content-gap",
     "dialog-content-border-radius",
     "dialog-content-background-color",
 

@@ -1,7 +1,9 @@
 const tokensKeys = [
     // Typography Variables
     "font-size",
+    "font-size-small",
     "line-height",
+    "line-height-small",
     "font-weight",
     "letter-spacing",
 

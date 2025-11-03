@@ -42,7 +42,7 @@ This tool helps you generate Handsontable theme files from Figma design tokens. 
 4. Build and use the theme:
 
     - Copy the generated `.scss` files from `/output`
-    - Paste them into the Handsontable themes directory at: `handsontable/src/styles/themes/`
+    - Paste them into the Handsontable themes directory at: `handsontable/src/styles/themes/utils/[theme-name]/_variables.scss`
     - Build the project and include the generated CSS files from the `handsontable/styles` directory in your application. 
    
     If you've created a new theme, you also need to create a corresponding icon pack `handsontable/src/styles/themes/utils/[your-theme-name]/_icons.scss`:

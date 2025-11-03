@@ -144,7 +144,6 @@ const tokensKeys = [
 
     // Radio Button Variables
     "radio-size",
-    "radio-border-radius",
     "radio-border-color",
     "radio-background-color",
     "radio-icon-color",

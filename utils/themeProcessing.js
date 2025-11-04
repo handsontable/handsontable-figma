@@ -8,6 +8,7 @@ const { generateVariables } = require('./variableGeneration');
 function filterVariablesByKeys(variables) {
     return tokensKeys.reduce((acc, key) => {
         const variableKey = `--${PREFIX}-${key}`;
+
         acc[variableKey] = variables[variableKey];
 
         return acc;

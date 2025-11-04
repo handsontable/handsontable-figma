@@ -74,10 +74,12 @@ function flattenTokensRecursive(obj, prefix, useNestedKeyName = false, propertyM
         // If it's a nested object without a 'value' property, recurse
         if (prop && typeof prop === 'object' && !('value' in prop)) {
             const newKeyName = prevKeyName ? `${prevKeyName}-${key}` : key;
+
             flattenTokensRecursive(prop, prefix, useNestedKeyName, propertyMap, newKeyName);
         } else {
             // Process the token value
             const { property, value } = processTokenValue(prop, prefix, useNestedKeyName, prevKeyName, key);
+
             propertyMap[property] = value;
         }
     }

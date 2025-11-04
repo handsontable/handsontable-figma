@@ -28,6 +28,12 @@ const tokensKeys = [
     "shadow-y",
     "shadow-blur",
 
+    // Bar Variables
+    "bar-foreground-color",
+    "bar-background-color",
+    "bar-horizontal-padding",
+    "bar-vertical-padding",
+
     // Cell Border Variables
     "cell-horizontal-border-color",
     "cell-vertical-border-color",

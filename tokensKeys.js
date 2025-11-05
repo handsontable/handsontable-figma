@@ -28,6 +28,12 @@ const tokensKeys = [
     "shadow-y",
     "shadow-blur",
 
+    // Bar Variables
+    "bar-foreground-color",
+    "bar-background-color",
+    "bar-horizontal-padding",
+    "bar-vertical-padding",
+
     // Cell Border Variables
     "cell-horizontal-border-color",
     "cell-vertical-border-color",
@@ -144,7 +150,6 @@ const tokensKeys = [
 
     // Radio Button Variables
     "radio-size",
-    "radio-border-radius",
     "radio-border-color",
     "radio-background-color",
     "radio-icon-color",

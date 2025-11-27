@@ -72,6 +72,7 @@ const tokensKeys = [
 
     // Cell Autofill Variables
     "cell-autofill-size",
+    "cell-autofill-hit-area-size",
     "cell-autofill-border-width",
     "cell-autofill-border-radius",
     "cell-autofill-border-color",

@@ -296,7 +296,7 @@ function writeCssThemeFiles(themeVariables) {
 
   for (const iconName of iconsNames) {
     const icons = ICONS_SET[iconName];
-    const cssContent = iconsMap(icons, `${PREFIX}-theme-${iconName}`);
+    const cssContent = iconsMap(icons);
     const filePath = `${baseIconsPath}/${PREFIX}-icons-${iconName}.css`;
 
     writeFileSync(filePath, cssContent);

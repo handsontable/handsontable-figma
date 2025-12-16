@@ -176,35 +176,6 @@ function processThemeTokens(themeValues, themes) {
 }
 
 /**
- * Converts a string from hyphen format to underscore format
- */
-function toUnderscore(str) {
-  return str.replace(/-/g, "_");
-}
-
-/**
- * Recursively converts all keys and string values from hyphen to underscore format
- */
-function convertToUnderscore(obj) {
-  if (typeof obj === "string") {
-    return toUnderscore(obj);
-  }
-
-  if (typeof obj !== "object" || obj === null) {
-    return obj;
-  }
-
-  if (Array.isArray(obj)) {
-    return obj.map(convertToUnderscore);
-  }
-
-  return Object.entries(obj).reduce((acc, [key, value]) => {
-    acc[toUnderscore(key)] = convertToUnderscore(value);
-    return acc;
-  }, {});
-}
-
-/**
  * Generates all theme variables from the tokens
  */
 function generateAllVariables(themes) {
@@ -220,8 +191,7 @@ function generateAllVariables(themes) {
     themeVariables[TOKENS_KEY][themeKey] = processThemeTokens(themeValues, themes);
   });
 
-  // Convert all keys and values to underscore format
-  return { themeVariables: convertToUnderscore(themeVariables) };
+  return { themeVariables: themeVariables };
 }
 
 export { generateAllVariables };

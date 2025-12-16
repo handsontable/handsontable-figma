@@ -2,6 +2,49 @@ import { OUTPUT_PATH, SIZING_KEY, DENSITY_KEY, OTHER_VARIABLES, ICONS_SET } from
 import { readFileSync, writeFileSync, ensureOutputDirectory } from "./helpers/fileSystem.js";
 
 /**
+ * Converts hyphen-case to camelCase (hyphens before digits become underscores)
+ */
+function toCamelCase(str) {
+  return str
+    .replace(/-(\d)/g, "_$1") // hyphen before digit → underscore
+    .replace(/-([a-z])/g, (_, char) => char.toUpperCase()); // hyphen before letter → camelCase
+}
+
+/**
+ * Converts reference values like "themes.background-secondary-color" to "themes.backgroundSecondaryColor"
+ */
+function convertValueReferenceToCamelCase(value) {
+  if (typeof value !== "string") {
+    return value;
+  }
+
+  // Split by dots, convert each part to camelCase, rejoin
+  return value
+    .split(".")
+    .map((part) => toCamelCase(part))
+    .join(".");
+}
+
+/**
+ * Recursively converts all keys in an object from hyphen-case to camelCase
+ * Also converts string values that are references (e.g., "themes.background-secondary-color")
+ */
+function convertKeysToCamelCase(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return convertValueReferenceToCamelCase(obj);
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map(convertKeysToCamelCase);
+  }
+
+  return Object.entries(obj).reduce((acc, [key, value]) => {
+    acc[toCamelCase(key)] = convertKeysToCamelCase(value);
+    return acc;
+  }, {});
+}
+
+/**
  * Converts an object to a JS string with unquoted keys
  */
 function toJsObject(obj, indent = 2) {
@@ -29,7 +72,8 @@ function writeJsThemeFiles(themeVariables) {
     console.log(`\n### JS ${key} Generation ###`);
 
     if (key === SIZING_KEY || key === DENSITY_KEY) {
-      writeFileSync(`${path}/${key}.js`, `export default ${toJsObject(value)}`);
+      const camelCaseValue = convertKeysToCamelCase(value);
+      writeFileSync(`${path}/${key}.js`, `export default ${toJsObject(camelCaseValue)}`);
 
       console.log(`Generated: ${path}/${key}.js`);
     } else {
@@ -45,7 +89,8 @@ function writeJsThemeFiles(themeVariables) {
           return acc;
         }, {});
 
-        writeFileSync(`${filePath}/${subKey}.js`, `export default ${toJsObject(values)}`);
+        const camelCaseValues = convertKeysToCamelCase(values);
+        writeFileSync(`${filePath}/${subKey}.js`, `export default ${toJsObject(camelCaseValues)}`);
 
         console.log(`Generated: ${filePath}/${subKey}.js`);
       });

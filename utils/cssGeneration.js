@@ -5,7 +5,6 @@ import {
   DENSITY_KEY,
   COLORS_KEY,
   TOKENS_KEY,
-  VARIANTS,
   OTHER_VARIABLES,
 } from "./constants.js";
 import { writeFileSync, ensureOutputDirectory } from "./helpers/fileSystem.js";
@@ -16,177 +15,106 @@ import { ICONS_SET } from "./constants.js";
 const DEFAULT_DENSITY_LEVEL = "default";
 
 /**
+ * List of prefixes that indicate a value should be converted to a CSS variable reference.
+ */
+const VAR_REFERENCE_PREFIXES = ['themes.', 'colors.', 'sizing.', 'density.'];
+
+/**
  * Converts underscores to hyphens in a string
  */
 function toHyphen(str) {
   return str.replace(/_/g, "-");
 }
-
 /**
- * Converts a key to CSS variable name format
+ * Checks if the given object is an object.
  */
-function toCssVariableName(prefix, ...parts) {
-  return `--${prefix}-${parts.map(toHyphen).join("-")}`;
+export function isObject(object) {
+  return Object.prototype.toString.call(object) === '[object Object]' && object !== null && object !== undefined;
 }
 
 /**
- * Formats a value as a CSS variable reference
+ * Checks if a value is a reference to another CSS variable (e.g., 'colors.primary').
  */
-function toVarReference(prefix, ...parts) {
-  return `var(${toCssVariableName(prefix, ...parts)})`;
+export function isVarReference(value) {
+  return typeof value === 'string' && VAR_REFERENCE_PREFIXES.some(prefix => value.includes(prefix));
 }
 
 /**
- * Converts a reference string like "sizing.size_4" to "var(--ht-sizing-size-4)"
+ * Converts a dot notation path to a CSS variable reference.
+ * Handles special case for 'themes.' prefix which strips the first segment.
  */
-function convertReferenceToVar(value) {
-  if (typeof value !== "string") {
-    return value;
+function toVarReference(path) {
+  if (path.includes('themes.')) {
+    return `var(--ht-${toHyphen(path.split('.').slice(1).join('-'))})`;
   }
 
-  // Handle sizing references: "sizing.size_4" -> "var(--ht-sizing-size-4)"
-  if (value.startsWith(`${SIZING_KEY}.`)) {
-    const path = toHyphen(value.substring(SIZING_KEY.length + 1));
-
-    return toVarReference(PREFIX, SIZING_KEY, path);
-  }
-
-  // Handle colors references: "colors.palette.100" -> "var(--ht-colors-palette-100)"
-  // "colors.white" -> "var(--ht-colors-white)"
-  if (value.startsWith(`${COLORS_KEY}.`)) {
-    const path = toHyphen(value.substring(COLORS_KEY.length + 1).replace(/\./g, "-"));
-
-    return toVarReference(PREFIX, COLORS_KEY, path);
-  }
-
-  // Handle density references: "density.gap" -> "var(--ht-density-gap)"
-  if (value.startsWith(`${DENSITY_KEY}.`)) {
-    const path = toHyphen(value.substring(DENSITY_KEY.length + 1));
-
-    return toVarReference(PREFIX, DENSITY_KEY, path);
-  }
-
-  // Handle themes references: "themes.foreground_color" -> "var(--ht-foreground-color)"
-  if (value.startsWith("themes.")) {
-    const path = toHyphen(value.substring("themes.".length));
-
-    return toVarReference(PREFIX, path);
-  }
-
-  return value;
+  return `var(--ht-${toHyphen(path.split('.').join('-'))})`;
 }
 
 /**
- * Generates sizing CSS variables
+ * Converts a key to a CSS variable key.
  */
-function generateSizingVariables(sizing) {
-  const lines = [];
-
-  for (const [key, value] of Object.entries(sizing)) {
-    const varName = toCssVariableName(PREFIX, SIZING_KEY, key);
-
-    lines.push(`  ${varName}: ${value};`);
-  }
-
-  return lines;
+export function toCssKey(prefix, key) {
+  return `--ht-${prefix ? `${prefix}-` : ''}${toHyphen(key)}`;
 }
 
 /**
- * Generates density CSS variables from a specific density level
+ * Converts a value to a CSS variable declaration value.
+ * Handles variable references, light/dark objects, and plain values.
  */
-function generateDensityVariables(density, level = DEFAULT_DENSITY_LEVEL) {
-  const lines = [];
-  const densityLevel = density[level];
-
-  if (!densityLevel) {
-    console.warn(`Density level "${level}" not found`);
-
-    return lines;
+export function toCssValue(value) {
+  if (isVarReference(value)) {
+    return toVarReference(value);
   }
 
-  for (const [key, value] of Object.entries(densityLevel)) {
-    const varName = toCssVariableName(PREFIX, DENSITY_KEY, key);
-    const cssValue = convertReferenceToVar(value);
+  if (Array.isArray(value)) {
+    if (value.length >= 2) {
+      const [light, dark] = value;
 
-    lines.push(`  ${varName}: ${cssValue};`);
+      return `light-dark(${toCssValue(light)}, ${toCssValue(dark)})`;
+    }
+
+    return toCssValue(value[0]);
   }
 
-  return lines;
+  return toHyphen(value);
 }
 
 /**
- * Generates color CSS variables for a specific theme
+ * Converts a key and value to a CSS variable line.
+ *
+ * @param {string} prefix - The prefix to add to the CSS variable.
+ * @param {string} key - The key to convert.
+ * @param {string} value - The value to convert.
+ * @returns {string} - The CSS variable line.
  */
-function generateColorVariables(colors, themeName) {
-  const lines = [];
-  const themeColors = colors[themeName];
+export function toCssLine(prefix, key, value) {
+  return `${toCssKey(prefix, key)}: ${toCssValue(value)};`;
+}
 
-  if (!themeColors) {
-    console.warn(`Colors for theme "${themeName}" not found`);
+/**
+ * Flattens the css variables object into a string of CSS variables.
+ *
+ * @param {object} cssVariables - The css variables object to flatten.
+ * @param {string} [prefix='colors'] - The prefix to add to the CSS variables.
+ * @param {string} [parentKey=''] - The parent key to add to the CSS variables.
+ * @returns {string} - The flattened css variables.
+ */
+export function flattenCssVariables(cssVariables, prefix = '', parentKey = '') {
+  let cssVars = '';
 
-    return lines;
-  }
+  Object.entries(cssVariables).forEach(([key, value]) => {
+    const normalizedKey = toHyphen(key);
+    const fullKey = parentKey ? `${parentKey}-${normalizedKey}` : normalizedKey;
 
-  for (const [category, values] of Object.entries(themeColors)) {
-    if (typeof values === "object" && values !== null) {
-      // Nested colors like primary.100, palette.50
-      for (const [shade, value] of Object.entries(values)) {
-        const varName = toCssVariableName(PREFIX, COLORS_KEY, category, shade);
-
-        lines.push(`  ${varName}: ${value};`);
-      }
+    if (isObject(value)) {
+      cssVars += flattenCssVariables(value, prefix, fullKey);
     } else {
-      // Top-level colors like white, black, transparent
-      const varName = toCssVariableName(PREFIX, COLORS_KEY, category);
-
-      lines.push(`  ${varName}: ${values};`);
+      cssVars += `  ${toCssLine(prefix, fullKey, value)}\n`;
     }
-  }
+  });
 
-  return lines;
-}
-
-/**
- * Formats a token value for CSS output
- */
-function formatTokenValue(value) {
-  if (value === null || value === undefined) {
-    return null;
-  }
-
-  // Handle light/dark mode objects
-  if (typeof value === "object" && value !== null) {
-    const light = value[VARIANTS[0]];
-    const dark = value[VARIANTS[1]];
-
-    if (light !== undefined && dark !== undefined) {
-      const lightVal = convertReferenceToVar(light);
-      const darkVal = convertReferenceToVar(dark);
-      return `light-dark(${lightVal}, ${darkVal})`;
-    }
-
-    return null;
-  }
-
-  return convertReferenceToVar(value);
-}
-
-/**
- * Generates token CSS variables for a specific theme
- */
-function generateTokenVariables(tokens) {
-  const lines = [];
-
-  for (const [key, value] of Object.entries(tokens)) {
-    const formattedValue = formatTokenValue(value);
-
-    if (formattedValue !== null && !OTHER_VARIABLES.includes(key)) {
-      const varName = toCssVariableName(PREFIX, key);
-      lines.push(`  ${varName}: ${formattedValue};`);
-    }
-  }
-
-  return lines;
+  return cssVars;
 }
 
 /**
@@ -194,6 +122,7 @@ function generateTokenVariables(tokens) {
  */
 function generateThemeCss(themeName, themeVariables, withIcons = false) {
   const { [SIZING_KEY]: sizing, [DENSITY_KEY]: density, [COLORS_KEY]: colors, [TOKENS_KEY]: tokens } = themeVariables;
+  const themeColors = colors[themeName];
   const themeTokens = tokens[themeName];
 
   if (!themeTokens) {
@@ -206,55 +135,58 @@ function generateThemeCss(themeName, themeVariables, withIcons = false) {
   const darkClass = `.ht-theme-${themeName}-dark`;
   const darkAutoClass = `.ht-theme-${themeName}-dark-auto`;
 
-  const lines = [];
+  let css = '';
 
   // Combined selector for shared variables
-  lines.push(`${baseClass},`);
-  lines.push(`${darkClass},`);
-  lines.push(`${darkAutoClass} {`);
+  css += `${baseClass},\n`;
+  css += `${darkClass},\n`;
+  css += `${darkAutoClass} {\n`;
 
   // Add sizing variables
-  lines.push(...generateSizingVariables(sizing));
+  css += flattenCssVariables(sizing, 'sizing');
 
-  // Add density variables (using comfortable density level)
-  lines.push(...generateDensityVariables(density, themeTokens[DENSITY_KEY]));
+  // Add density variables
+  css += flattenCssVariables(density[themeTokens[DENSITY_KEY] || DEFAULT_DENSITY_LEVEL], 'density');
 
-  // Add color variables (using theme-specific colors)
-  lines.push(...generateColorVariables(colors, themeName));
+  // Add colors variables
+  css += flattenCssVariables(themeColors, 'colors');
+
+  // Remove other variables from theme tokens
+  const themeTokensWithoutOtherVariables = Object.fromEntries(
+    Object.entries(themeTokens).filter(([key]) => !OTHER_VARIABLES.includes(key))
+  );
 
   // Add token variables
-  lines.push(...generateTokenVariables(themeTokens));
+  css += flattenCssVariables(themeTokensWithoutOtherVariables, '');
 
-  lines.push("}");
+  css += "}\n";
 
   // Add color-scheme declarations for each variant
-  lines.push("");
-  lines.push(`${baseClass} {`);
-  lines.push("  color-scheme: light;");
-  lines.push("}");
+  css += `\n${baseClass} {\n`;
+  css += "  color-scheme: light;\n";
+  css += "}\n";
 
-  lines.push("");
-  lines.push(`${darkClass} {`);
-  lines.push("  color-scheme: dark;");
-  lines.push("}");
+  css += `\n${darkClass} {\n`;
+  css += "  color-scheme: dark;\n";
+  css += "}\n";
 
-  lines.push("");
-  lines.push(`${darkAutoClass} {`);
-  lines.push("  color-scheme: light dark;");
-  lines.push("}");
+  css += `\n${darkAutoClass} {\n`;
+  css += "  color-scheme: light dark;\n";
+  css += "}\n";
 
   if (withIcons) {
-    lines.push("");
+    css += "\n";
+
     if (themeName === "horizon") {
-      lines.push(iconsMap(ICONS_SET.horizon, `${PREFIX}-theme-${themeName}`));
+      css += iconsMap(ICONS_SET.horizon, `${PREFIX}-theme-${themeName}`);
     } else {
-      lines.push(iconsMap(ICONS_SET.main, `${PREFIX}-theme-${themeName}`));
+      css += iconsMap(ICONS_SET.main, `${PREFIX}-theme-${themeName}`);
     }
+
+    css += "\n";
   }
 
-  lines.push("");
-
-  return lines.join("\n");
+  return css;
 }
 
 /**

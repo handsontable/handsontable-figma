@@ -18,7 +18,7 @@ function processReference(value, themes, refType) {
 
   switch (refType) {
     case MODE_KEY: {
-      const result = {};
+      const result = [];
       VARIANTS.forEach((variant) => {
         const variantPath = path
           .split(".")
@@ -27,10 +27,10 @@ function processReference(value, themes, refType) {
         const tokenValue = findValueByPath(themes, variantPath);
         if (tokenValue?.value) {
           const colorPath = getReferencePath(tokenValue.value);
-          result[variant] = transformReferencePath(colorPath, [1, 2]);
+          result.push(transformReferencePath(colorPath, [1, 2]));
         }
       });
-      return Object.keys(result).length > 0 ? result : null;
+      return result.length === 2 ? result : null;
     }
     case COLORS_KEY:
     case THEME_KEY:

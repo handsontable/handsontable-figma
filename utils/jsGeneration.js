@@ -49,6 +49,15 @@ function convertKeysToCamelCase(obj) {
  */
 function toJsObject(obj, indent = 2) {
   const spaces = " ".repeat(indent);
+
+  // Handle arrays
+  if (Array.isArray(obj)) {
+    const items = obj.map((item) =>
+      typeof item === "object" && item !== null ? toJsObject(item, indent + 2) : JSON.stringify(item)
+    );
+    return `[${items.join(", ")}]`;
+  }
+
   const entries = Object.entries(obj).map(([key, value]) => {
     const formattedValue =
       typeof value === "object" && value !== null ? toJsObject(value, indent + 2) : JSON.stringify(value);

@@ -45,22 +45,47 @@ function convertKeysToCamelCase(obj) {
 }
 
 /**
+ * Converts a value to a single-quoted string representation (for output files)
+ */
+function toSingleQuotedString(value) {
+  if (typeof value === "string") {
+    // Escape single quotes and backslashes, then wrap in single quotes
+    const escaped = value.replace(/\\/g, "\\\\").replace(/'/g, "\\'");
+    return `'${escaped}'`;
+  }
+  return JSON.stringify(value);
+}
+
+/**
+ * Converts a value to a double-quoted string representation (for icons)
+ */
+function toDoubleQuotedString(value) {
+  if (typeof value === "string") {
+    // Escape double quotes and backslashes, then wrap in double quotes
+    const escaped = value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+    return `"${escaped}"`;
+  }
+  return JSON.stringify(value);
+}
+
+/**
  * Converts an object to a JS string with unquoted keys
  */
-function toJsObject(obj, indent = 2) {
+function toJsObject(obj, indent = 2, useDoubleQuotes = false) {
   const spaces = " ".repeat(indent);
+  const stringFormatter = useDoubleQuotes ? toDoubleQuotedString : toSingleQuotedString;
 
   // Handle arrays
   if (Array.isArray(obj)) {
     const items = obj.map((item) =>
-      typeof item === "object" && item !== null ? toJsObject(item, indent + 2) : JSON.stringify(item)
+      typeof item === "object" && item !== null ? toJsObject(item, indent + 2, useDoubleQuotes) : stringFormatter(item)
     );
     return `[${items.join(", ")}]`;
   }
 
   const entries = Object.entries(obj).map(([key, value]) => {
     const formattedValue =
-      typeof value === "object" && value !== null ? toJsObject(value, indent + 2) : JSON.stringify(value);
+      typeof value === "object" && value !== null ? toJsObject(value, indent + 2, useDoubleQuotes) : stringFormatter(value);
     return `${spaces}${key}: ${formattedValue}`;
   });
   return `{\n${entries.join(",\n")}\n${" ".repeat(indent - 2)}}`;
@@ -70,19 +95,19 @@ function toJsObject(obj, indent = 2) {
  * Writes JS theme files for theme variables
  */
 function writeJsThemeFiles(themeVariables) {
-  const jsPath = `variables`;
+  const jsPath = "variables";
   const path = `${OUTPUT_PATH}/${jsPath}`;
 
   ensureOutputDirectory(path);
 
-  console.log(`## JS Generation ##`);
+  console.log("## JS Generation ##");
 
   Object.entries(themeVariables).forEach(([key, value]) => {
     console.log(`\n### JS ${key} Generation ###`);
 
     if (key === SIZING_KEY || key === DENSITY_KEY) {
       const camelCaseValue = convertKeysToCamelCase(value);
-      writeFileSync(`${path}/${key}.js`, `export default ${toJsObject(camelCaseValue)}`);
+      writeFileSync(`${path}/${key}.js`, `export default ${toJsObject(camelCaseValue)};\n`);
 
       console.log(`Generated: ${path}/${key}.js`);
     } else {
@@ -99,7 +124,7 @@ function writeJsThemeFiles(themeVariables) {
         }, {});
 
         const camelCaseValues = convertKeysToCamelCase(values);
-        writeFileSync(`${filePath}/${subKey}.js`, `export default ${toJsObject(camelCaseValues)}`);
+        writeFileSync(`${filePath}/${subKey}.js`, `export default ${toJsObject(camelCaseValues)};\n`);
 
         console.log(`Generated: ${filePath}/${subKey}.js`);
       });
@@ -110,9 +135,9 @@ function writeJsThemeFiles(themeVariables) {
 
   ensureOutputDirectory(iconsPath);
 
-  // Generate icons files
+  // Generate icons files (use double quotes and add semicolon)
   Object.entries(ICONS_SET).forEach(([key, value]) => {
-    writeFileSync(`${iconsPath}/${key}.js`, `export default ${toJsObject(value)}`);
+    writeFileSync(`${iconsPath}/${key}.js`, `/* eslint-disable max-len, quotes */\nexport default ${toJsObject(value, 2, true)};\n`);
 
     console.log(`Generated: ${iconsPath}/${key}.js`);
   });

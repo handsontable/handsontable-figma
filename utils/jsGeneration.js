@@ -2,6 +2,22 @@ import { OUTPUT_PATH, SIZING_KEY, DENSITY_KEY, OTHER_VARIABLES, ICONS_SET } from
 import { readFileSync, writeFileSync, ensureOutputDirectory } from "./helpers/fileSystem.js";
 
 /**
+ * Auto-generated file header
+ */
+const AUTO_GENERATED_HEADER = `/*
+ * This file is auto-generated. Do not edit directly.
+ */
+
+`;
+
+/**
+ * ESLint disable comment for icons files
+ */
+const ESLINT_DISABLE_ICONS = `/* eslint-disable max-len, quotes */
+
+`;
+
+/**
  * Converts hyphen-case to camelCase (hyphens before digits become underscores)
  */
 function toCamelCase(str) {
@@ -107,7 +123,7 @@ function writeJsThemeFiles(themeVariables) {
 
     if (key === SIZING_KEY || key === DENSITY_KEY) {
       const camelCaseValue = convertKeysToCamelCase(value);
-      writeFileSync(`${path}/${key}.js`, `export default ${toJsObject(camelCaseValue)};\n`);
+      writeFileSync(`${path}/${key}.js`, `${AUTO_GENERATED_HEADER}export default ${toJsObject(camelCaseValue)};\n`);
 
       console.log(`Generated: ${path}/${key}.js`);
     } else {
@@ -124,7 +140,7 @@ function writeJsThemeFiles(themeVariables) {
         }, {});
 
         const camelCaseValues = convertKeysToCamelCase(values);
-        writeFileSync(`${filePath}/${subKey}.js`, `export default ${toJsObject(camelCaseValues)};\n`);
+        writeFileSync(`${filePath}/${subKey}.js`, `${AUTO_GENERATED_HEADER}export default ${toJsObject(camelCaseValues)};\n`);
 
         console.log(`Generated: ${filePath}/${subKey}.js`);
       });
@@ -137,7 +153,7 @@ function writeJsThemeFiles(themeVariables) {
 
   // Generate icons files (use double quotes and add semicolon)
   Object.entries(ICONS_SET).forEach(([key, value]) => {
-    writeFileSync(`${iconsPath}/${key}.js`, `/* eslint-disable max-len, quotes */\nexport default ${toJsObject(value, 2, true)};\n`);
+    writeFileSync(`${iconsPath}/${key}.js`, `${ESLINT_DISABLE_ICONS}${AUTO_GENERATED_HEADER}export default ${toJsObject(value, 2, true)};\n`);
 
     console.log(`Generated: ${iconsPath}/${key}.js`);
   });
@@ -146,10 +162,10 @@ function writeJsThemeFiles(themeVariables) {
 
   ensureOutputDirectory(helpersPath);
 
-  // Generate icons helper file from utils/icons.js
+  // Generate icons helper file from utils/helpers/iconsMap.js
   const iconsHelperContent = readFileSync("./utils/helpers/iconsMap.js", "utf8");
 
-  writeFileSync(`${helpersPath}/iconsMap.js`, iconsHelperContent);
+  writeFileSync(`${helpersPath}/iconsMap.js`, `${ESLINT_DISABLE_ICONS}${AUTO_GENERATED_HEADER}${iconsHelperContent}`);
 
   console.log(`Generated: ${helpersPath}/iconsMap.js`);
 }

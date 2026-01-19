@@ -1,4 +1,3 @@
-/* eslint-disable max-len, quotes */
 const icon = (icons, name) => {
   return `width: var(--ht-icon-size);
   height: var(--ht-icon-size);

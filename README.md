@@ -4,13 +4,12 @@ A tool for generating theme files from Figma design tokens.
 
 ## How to use
 
-This tool helps you generate Handsontable theme files from Figma design tokens. It works in conjunction with the main [Handsontable repository](https://github.com/handsontable/handsontable).
+This tool helps you generate Handsontable theme files from Figma design tokens.
 
 ### Prerequisites
 
 - Node.js version 20 or higher
 - Access to Figma with design tokens
-- A local clone of the [Handsontable repository](https://github.com/handsontable/handsontable)
 
 ### Steps
 
@@ -32,25 +31,88 @@ This tool helps you generate Handsontable theme files from Figma design tokens. 
 2. Set up the theme generator:
 
     - Clone this repository
+    - Run `npm install`
     - Place the exported `tokens.json` file in the root directory
 
 3. Generate theme files:
 
     - Run `npm start` to generate the theme files
-    - The generated `.scss` files will appear in the `/output` directory
+    - The generated files will appear in the `/output` directory
 
-4. Build and use the theme:
+## Output Structure
 
-    - Copy the generated `.scss` files from `/output`
-    - Paste them into the Handsontable themes directory at: `handsontable/src/styles/themes/utils/[theme-name]/_variables.scss`
-    - Build the project and include the generated CSS files from the `handsontable/styles` directory in your application. 
-   
-    If you've created a new theme, you also need to create a corresponding icon pack `handsontable/src/styles/themes/utils/[your-theme-name]/_icons.scss`:
+The tool generates the following files in the `/output` directory:
 
-    Alternatively, you can use an existing icon pack. To do so, simply replace `@use "utils/[your-theme-name]/icons";` with, for example, `@use "utils/main/icons";` in your `[your-theme-name].scss` file.
+### CSS Files
 
-<br>
+- `css/theme/ht-theme-[name].css` - Complete theme CSS with icons
+- `css/theme/ht-theme-[name]-no-icons.css` - Theme CSS without icons
+- `css/icons/ht-icons-[name].css` - Standalone icon CSS files
+
+Each theme CSS file includes CSS custom properties for:
+- Sizing variables (`--ht-sizing-*`)
+- Density variables (`--ht-density-*`)
+- Color variables (`--ht-colors-*`)
+- Token variables (`--ht-*`)
+
+Theme variants supported: `.ht-theme-[name]` (light), `.ht-theme-[name]-dark`, `.ht-theme-[name]-dark-auto`
+
+### JS Files
+
+- `variables/sizing.js` - Sizing scale values
+- `variables/density.js` - Density/spacing presets
+- `variables/colors/[name].js` - Color palette for each theme
+- `variables/tokens/[name].js` - Theme tokens for each theme
+- `variables/icons/[name].js` - Icon definitions
+- `variables/helpers/iconsMap.js` - Helper for generating icon CSS
+
+## Usage
+
+### Option 1: JavaScript (Theme API)
+
+Register a custom theme using the generated JS files:
+
+```js
+import { registerTheme } from 'handsontable/themes';
+import icons from 'handsontable/themes/static/variables/icons/main';
+import colors from 'handsontable/themes/static/variables/colors/main';
+import tokens from 'handsontable/themes/static/variables/tokens/main';
+
+const myTheme = registerTheme({
+  name: 'theme_name',
+  icons: icons,
+  colors: colors,
+  tokens: tokens,
+});
+```
+
+Then apply the theme to your Handsontable instance:
+
+```js
+const hot = new Handsontable(container, {
+  theme: myTheme,
+  // ... other options
+});
+```
+
+You can configure the color scheme using `setColorScheme()` with `'light'`, `'dark'`, or `'auto'` values. The `'auto'` option allows programmatic control over light/dark switching based on your application's logic.
+
+### Option 2: CSS
+
+Include the generated CSS file in your application:
+
+```html
+<link rel="stylesheet" href="ht-theme-main.css">
+```
+
+Then apply the theme class to your Handsontable container:
+
+```html
+<div id="hot" class="ht-theme-main"></div>
+```
+
+For dark mode, use `.ht-theme-main-dark` or `.ht-theme-main-dark-auto` (follows system preference).
 
 ---
 
-© 2012 - 2025 Handsoncode
+© 2012 - 2026 Handsoncode

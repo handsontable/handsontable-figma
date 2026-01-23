@@ -27,7 +27,7 @@ function toCamelCase(str) {
 }
 
 /**
- * Converts reference values like "themes.background-secondary-color" to "themes.backgroundSecondaryColor"
+ * Converts reference values like "tokens.background-secondary-color" to "tokens.backgroundSecondaryColor"
  */
 function convertValueReferenceToCamelCase(value) {
   if (typeof value !== "string") {

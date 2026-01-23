@@ -17,7 +17,7 @@ const DEFAULT_DENSITY_LEVEL = "default";
 /**
  * List of prefixes that indicate a value should be converted to a CSS variable reference.
  */
-const VAR_REFERENCE_PREFIXES = ['themes.', 'colors.', 'sizing.', 'density.'];
+const VAR_REFERENCE_PREFIXES = ['tokens.', 'colors.', 'sizing.', 'density.'];
 
 /**
  * Converts underscores to hyphens in a string
@@ -41,10 +41,10 @@ export function isVarReference(value) {
 
 /**
  * Converts a dot notation path to a CSS variable reference.
- * Handles special case for 'themes.' prefix which strips the first segment.
+ * Handles special case for 'tokens.' prefix which strips the first segment.
  */
 function toVarReference(path) {
-  if (path.includes('themes.')) {
+  if (path.includes('tokens.')) {
     return `var(--ht-${toHyphen(path.split('.').slice(1).join('-'))})`;
   }
 

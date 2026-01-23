@@ -81,11 +81,13 @@ function transformReferencePath(path, indicesToRemove = []) {
 }
 
 /**
- * Transforms a reference path to keep only first and last segments
+ * Transforms a reference path to keep only first and last segments.
+ * Replaces 'themes' prefix with 'tokens' for output references.
  */
 function transformReferencePathFirstLast(path) {
   const keys = path.split(".");
-  return `${keys[0]}.${keys[keys.length - 1]}`;
+  const prefix = keys[0] === "themes" ? "tokens" : keys[0];
+  return `${prefix}.${keys[keys.length - 1]}`;
 }
 
 export {

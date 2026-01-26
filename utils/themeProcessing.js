@@ -1,4 +1,13 @@
-import { THEME_KEY, MODE_KEY, VARIANTS, COLORS_KEY, TOKENS_KEY, DENSITY_KEY, SIZING_KEY } from "./constants.js";
+import {
+  THEME_KEY,
+  MODE_KEY,
+  VARIANTS,
+  COLORS_KEY,
+  TOKENS_KEY,
+  DENSITY_KEY,
+  SIZING_KEY,
+  EXCEPTION_KEYS,
+} from "./constants.js";
 import { tokensKeys } from "../tokensKeys.js";
 import {
   getReferencePath,
@@ -47,6 +56,11 @@ function processReference(value, themes, refType) {
  * Formats a value based on its type and key
  */
 function formatValue(key, value) {
+  // Return original string value for exception keys without any processing
+  if (EXCEPTION_KEYS.includes(key) && typeof value === "string") {
+    return value;
+  }
+
   // Format numbers with appropriate units
   if (typeof value === "number") {
     if (key.includes("opacity")) {

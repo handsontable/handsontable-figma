@@ -1,12 +1,4 @@
-import {
-  OUTPUT_PATH,
-  PREFIX,
-  SIZING_KEY,
-  DENSITY_KEY,
-  COLORS_KEY,
-  TOKENS_KEY,
-  OTHER_VARIABLES,
-} from "./constants.js";
+import { OUTPUT_PATH, PREFIX, SIZING_KEY, DENSITY_KEY, COLORS_KEY, TOKENS_KEY, OTHER_VARIABLES } from "./constants.js";
 import { writeFileSync, ensureOutputDirectory } from "./helpers/fileSystem.js";
 import { iconsMap } from "./helpers/iconsMap.js";
 import { ICONS_SET } from "./constants.js";
@@ -17,7 +9,7 @@ const DEFAULT_DENSITY_LEVEL = "default";
 /**
  * List of prefixes that indicate a value should be converted to a CSS variable reference.
  */
-const VAR_REFERENCE_PREFIXES = ['tokens.', 'colors.', 'sizing.', 'density.'];
+const VAR_REFERENCE_PREFIXES = ["tokens.", "colors.", "sizing.", "density."];
 
 /**
  * Converts underscores to hyphens in a string
@@ -29,14 +21,14 @@ function toHyphen(str) {
  * Checks if the given object is an object.
  */
 export function isObject(object) {
-  return Object.prototype.toString.call(object) === '[object Object]' && object !== null && object !== undefined;
+  return Object.prototype.toString.call(object) === "[object Object]" && object !== null && object !== undefined;
 }
 
 /**
  * Checks if a value is a reference to another CSS variable (e.g., 'colors.primary').
  */
 export function isVarReference(value) {
-  return typeof value === 'string' && VAR_REFERENCE_PREFIXES.some(prefix => value.includes(prefix));
+  return typeof value === "string" && VAR_REFERENCE_PREFIXES.some((prefix) => value.includes(prefix));
 }
 
 /**
@@ -44,18 +36,18 @@ export function isVarReference(value) {
  * Handles special case for 'tokens.' prefix which strips the first segment.
  */
 function toVarReference(path) {
-  if (path.includes('tokens.')) {
-    return `var(--ht-${toHyphen(path.split('.').slice(1).join('-'))})`;
+  if (path.includes("tokens.")) {
+    return `var(--ht-${toHyphen(path.split(".").slice(1).join("-"))})`;
   }
 
-  return `var(--ht-${toHyphen(path.split('.').join('-'))})`;
+  return `var(--ht-${toHyphen(path.split(".").join("-"))})`;
 }
 
 /**
  * Converts a key to a CSS variable key.
  */
 export function toCssKey(prefix, key) {
-  return `--ht-${prefix ? `${prefix}-` : ''}${toHyphen(key)}`;
+  return `--ht-${prefix ? `${prefix}-` : ""}${toHyphen(key)}`;
 }
 
 /**
@@ -100,8 +92,8 @@ export function toCssLine(prefix, key, value) {
  * @param {string} [parentKey=''] - The parent key to add to the CSS variables.
  * @returns {string} - The flattened css variables.
  */
-export function flattenCssVariables(cssVariables, prefix = '', parentKey = '') {
-  let cssVars = '';
+export function flattenCssVariables(cssVariables, prefix = "", parentKey = "") {
+  let cssVars = "";
 
   Object.entries(cssVariables).forEach(([key, value]) => {
     const normalizedKey = toHyphen(key);
@@ -135,7 +127,7 @@ function generateThemeCss(themeName, themeVariables, withIcons = false) {
   const darkClass = `.ht-theme-${themeName}-dark`;
   const darkAutoClass = `.ht-theme-${themeName}-dark-auto`;
 
-  let css = '';
+  let css = "";
 
   // Combined selector for shared variables
   css += `${baseClass},\n`;
@@ -143,13 +135,13 @@ function generateThemeCss(themeName, themeVariables, withIcons = false) {
   css += `${darkAutoClass} {\n`;
 
   // Add sizing variables
-  css += flattenCssVariables(sizing, 'sizing');
+  css += flattenCssVariables(sizing, "sizing");
 
   // Add density variables
-  css += flattenCssVariables(density[themeTokens[DENSITY_KEY] || DEFAULT_DENSITY_LEVEL], 'density');
+  css += flattenCssVariables(density[themeTokens[DENSITY_KEY] || DEFAULT_DENSITY_LEVEL], "density");
 
   // Add colors variables
-  css += flattenCssVariables(themeColors, 'colors');
+  css += flattenCssVariables(themeColors, "colors");
 
   // Remove other variables from theme tokens
   const themeTokensWithoutOtherVariables = Object.fromEntries(
@@ -157,7 +149,7 @@ function generateThemeCss(themeName, themeVariables, withIcons = false) {
   );
 
   // Add token variables
-  css += flattenCssVariables(themeTokensWithoutOtherVariables, '');
+  css += flattenCssVariables(themeTokensWithoutOtherVariables, "");
 
   css += "}\n";
 

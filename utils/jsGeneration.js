@@ -1,4 +1,4 @@
-import { OUTPUT_PATH, SIZING_KEY, DENSITY_KEY, OTHER_VARIABLES, ICONS_SET } from "./constants.js";
+import { OUTPUT_PATH, SIZING_KEY, DENSITY_KEY, OTHER_VARIABLES, ICONS_SET, EXCEPTION_KEYS } from "./constants.js";
 import { readFileSync, writeFileSync, ensureOutputDirectory } from "./helpers/fileSystem.js";
 
 /**
@@ -45,17 +45,23 @@ function convertValueReferenceToCamelCase(value) {
  * Recursively converts all keys in an object from hyphen-case to camelCase
  * Also converts string values that are references (e.g., "themes.background-secondary-color")
  */
-function convertKeysToCamelCase(obj) {
+function convertKeysToCamelCase(obj, parentKey = null) {
   if (typeof obj !== "object" || obj === null) {
+    // Skip camelCase conversion for exception keys' values
+    if (parentKey && EXCEPTION_KEYS.includes(parentKey) && typeof obj === "string") {
+      return obj;
+    }
     return convertValueReferenceToCamelCase(obj);
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(convertKeysToCamelCase);
+    return obj.map((item) => convertKeysToCamelCase(item, parentKey));
   }
 
   return Object.entries(obj).reduce((acc, [key, value]) => {
-    acc[toCamelCase(key)] = convertKeysToCamelCase(value);
+    const camelKey = toCamelCase(key);
+    // Pass the original key (before camelCase) to check if it's an exception key
+    acc[camelKey] = convertKeysToCamelCase(value, key);
     return acc;
   }, {});
 }
@@ -101,7 +107,9 @@ function toJsObject(obj, indent = 2, useDoubleQuotes = false) {
 
   const entries = Object.entries(obj).map(([key, value]) => {
     const formattedValue =
-      typeof value === "object" && value !== null ? toJsObject(value, indent + 2, useDoubleQuotes) : stringFormatter(value);
+      typeof value === "object" && value !== null
+        ? toJsObject(value, indent + 2, useDoubleQuotes)
+        : stringFormatter(value);
     return `${spaces}${key}: ${formattedValue}`;
   });
   return `{\n${entries.join(",\n")}\n${" ".repeat(indent - 2)}}`;
@@ -140,7 +148,10 @@ function writeJsThemeFiles(themeVariables) {
         }, {});
 
         const camelCaseValues = convertKeysToCamelCase(values);
-        writeFileSync(`${filePath}/${subKey}.js`, `${AUTO_GENERATED_HEADER}export default ${toJsObject(camelCaseValues)};\n`);
+        writeFileSync(
+          `${filePath}/${subKey}.js`,
+          `${AUTO_GENERATED_HEADER}export default ${toJsObject(camelCaseValues)};\n`
+        );
 
         console.log(`Generated: ${filePath}/${subKey}.js`);
       });
@@ -153,7 +164,10 @@ function writeJsThemeFiles(themeVariables) {
 
   // Generate icons files (use double quotes and add semicolon)
   Object.entries(ICONS_SET).forEach(([key, value]) => {
-    writeFileSync(`${iconsPath}/${key}.js`, `${ESLINT_DISABLE_ICONS}${AUTO_GENERATED_HEADER}export default ${toJsObject(value, 2, true)};\n`);
+    writeFileSync(
+      `${iconsPath}/${key}.js`,
+      `${ESLINT_DISABLE_ICONS}${AUTO_GENERATED_HEADER}export default ${toJsObject(value, 2, true)};\n`
+    );
 
     console.log(`Generated: ${iconsPath}/${key}.js`);
   });

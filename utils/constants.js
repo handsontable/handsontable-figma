@@ -13,6 +13,7 @@ export const TOKENS_PATH = "./tokens.json";
 export const OUTPUT_PATH = "./output";
 export const VARIANTS = ["light", "dark"];
 export const OTHER_VARIABLES = ["density"];
+export const EXCEPTION_KEYS = ["font-family"];
 export const ICONS_SET = {
   main: iconsMain,
   horizon: iconsHorizon,

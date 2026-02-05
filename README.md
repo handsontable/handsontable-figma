@@ -105,10 +105,19 @@ Include the generated CSS file in your application:
 <link rel="stylesheet" href="ht-theme-main.css">
 ```
 
-Then apply the theme class to your Handsontable container:
+or
 
-```html
-<div id="hot" class="ht-theme-main"></div>
+```js
+import 'ht-theme-main.css';
+```
+
+Set the `theme` option to your theme class name in the Handsontable config:
+
+```js
+const hot = new Handsontable(container, {
+  theme: 'ht-theme-main',
+  // ... other options
+});
 ```
 
 For dark mode, use `.ht-theme-main-dark` or `.ht-theme-main-dark-auto` (follows system preference).

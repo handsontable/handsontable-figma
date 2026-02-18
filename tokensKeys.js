@@ -375,6 +375,13 @@ const tokensKeys = [
   "dialog-content-border-radius",
   "dialog-content-background-color",
 
+  // MultiSelect Editor And Renderer Variables
+  "chip-background",
+  "chip-border-radius",
+  "chip-vertical-padding",
+  "chip-horizontal-padding",
+  "chip-gap",
+
   // Scrollbar Variables
   "scrollbar-border-radius",
   "scrollbar-track-color",

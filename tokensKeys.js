@@ -174,6 +174,7 @@ const tokensKeys = [
   "icon-button-border-color",
   "icon-button-background-color",
   "icon-button-icon-color",
+  "icon-button-hit-area-size",
 
   // Icon Button Hover Variables
   "icon-button-hover-border-color",

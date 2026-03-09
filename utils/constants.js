@@ -1,17 +1,20 @@
+import iconsMain from "../icons/main.js";
+import iconsHorizon from "../icons/horizon.js";
+
 // Constants
-const PREFIX = 'ht';
-const THEME_KEY = 'ht_themes';
-const MODE_KEY = 'mode';
-const TOKENS_PATH = './tokens.json';
-const OUTPUT_PATH = './output';
-const VARIANTS = ['light', 'dark'];
-
-module.exports = {
-    PREFIX,
-    THEME_KEY,
-    MODE_KEY,
-    TOKENS_PATH,
-    OUTPUT_PATH,
-    VARIANTS,
+export const PREFIX = "ht";
+export const THEME_KEY = "themes";
+export const MODE_KEY = "mode";
+export const TOKENS_KEY = "tokens";
+export const COLORS_KEY = "colors";
+export const DENSITY_KEY = "density";
+export const SIZING_KEY = "sizing";
+export const TOKENS_PATH = "./tokens.json";
+export const OUTPUT_PATH = "./output";
+export const VARIANTS = ["light", "dark"];
+export const OTHER_VARIABLES = ["density"];
+export const EXCEPTION_KEYS = ["font-family"];
+export const ICONS_SET = {
+  main: iconsMain,
+  horizon: iconsHorizon,
 };
-

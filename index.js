@@ -1,24 +1,30 @@
-const { ensureOutputDirectory, loadTokens } = require('./utils/fileSystem');
-const { generateAllVariables } = require('./utils/themeProcessing');
-const { writeThemeFiles } = require('./utils/scssGeneration');
+import { rmSync, existsSync, loadTokens } from "./utils/helpers/fileSystem.js";
+import { generateAllVariables } from "./utils/themeProcessing.js";
+import { writeJsThemeFiles } from "./utils/jsGeneration.js";
+import { writeCssThemeFiles } from "./utils/cssGeneration.js";
+import { OUTPUT_PATH } from "./utils/constants.js";
 
 // ============================================================================
 // Main Execution
 // ============================================================================
 
 function main() {
-    ensureOutputDirectory();
+  const themes = loadTokens();
+  const { themeVariables } = generateAllVariables(themes);
 
-    const themes = loadTokens();
-    const { modeVariables, themeVariables } = generateAllVariables(themes);
-
-    try {
-        writeThemeFiles(modeVariables, themeVariables);
-
-        console.log('Theme files generated successfully.');
-    } catch (error) {
-        console.error('Error generating theme files:', error);
+  try {
+    // Remove output directory if it exists
+    if (existsSync(OUTPUT_PATH)) {
+      rmSync(OUTPUT_PATH, { recursive: true });
     }
+
+    writeJsThemeFiles(themeVariables);
+    writeCssThemeFiles(themeVariables);
+
+    console.log("\nTheme files generated successfully.");
+  } catch (error) {
+    console.error("\nError generating theme files:", error);
+  }
 }
 
 main();

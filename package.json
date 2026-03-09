@@ -3,9 +3,15 @@
   "version": "1.0.0",
   "description": "A tool for generating theme files from Figma design tokens.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "author": "Handsoncode <hello@handsontable.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^3.7.4"
+  }
 }

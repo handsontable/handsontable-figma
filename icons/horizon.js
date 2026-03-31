@@ -3,8 +3,7 @@ export default {
     "data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6.64648 10.9393L9.93938 7.64644L6.64648 4.35354' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A",
   arrowRightWithBar:
     "data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M4.9292 4.64188L8.27934 7.99203L4.9292 11.3422M11.0711 4.08353V11.3422' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
-  arrowLeft:
-    "data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.93945 10.9393L6.64656 7.64644L9.93945 4.35354' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A",
+  arrowLeft: "data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.49268 11.2929L6.19978 8.00001L9.49268 4.70712' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A",
   arrowLeftWithBar:
     "data:image/svg+xml;charset=utf-8,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.0713 4.64188L7.72115 7.99203L11.0713 11.3422M4.92936 4.08353L4.92936 11.3422' stroke='currentColor' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
   arrowDown:

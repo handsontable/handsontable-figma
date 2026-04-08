@@ -376,6 +376,14 @@ const tokensKeys = [
   "dialog-content-border-radius",
   "dialog-content-background-color",
 
+  // Notification Variables (toast chrome and variant accent bars; info variant has no accent)
+  "notification-foreground-color",
+  "notification-background-color",
+  "notification-border-color",
+  "notification-success-accent",
+  "notification-warning-accent",
+  "notification-error-accent",
+
   // MultiSelect Editor And Renderer Variables
   "chip-background",
   "chip-border-radius",

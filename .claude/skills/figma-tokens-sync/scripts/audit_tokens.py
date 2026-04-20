@@ -34,14 +34,18 @@ REQUIRED_TOP_LEVEL = ("themes", "sizing", "density", "colors")
 # OTHER_VARIABLES in utils/constants.js. Don't report these as stale.
 NOT_A_FIGMA_LEAF = {"density"}
 
-# Ordering suffix -> sub-section label, following the pattern already in
-# tokensKeys.js (Primary Button, Secondary Button, Icon Button, Checkbox, ...).
+# Ordering suffix -> sub-section label. Used only for the `suggested_groups`
+# starting point — tokensKeys.js itself is not fully consistent (Checkbox /
+# Radio Button put focus before disabled; Primary/Secondary Button, Input,
+# and Pagination Button put disabled before focus). This sequence matches
+# the majority pattern; the SKILL.md tells the model to override it when
+# the closest analogous component disagrees.
 STATE_ORDER = [
     ("", "base"),
     ("hover", "hover"),
     ("active", "active"),
-    ("focus", "focus"),
     ("disabled", "disabled"),
+    ("focus", "focus"),
     ("checked", "checked"),
     ("indeterminate", "indeterminate"),
     ("open", "open"),

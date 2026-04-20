@@ -58,7 +58,7 @@ After approval, insert the new keys into `tokensKeys.js`. Preserve these convent
 
 - Keys are hyphen-case double-quoted strings, one per line, trailing comma.
 - Sections use `// <Component Name> Variables` header comments.
-- Multi-state components split into subsections in this order: **base → hover → active → focus → disabled → checked → indeterminate → open → close**. Blank line between subsections.
+- Multi-state components split into subsections. The majority pattern is **base → hover → active → disabled → focus → checked → indeterminate → open → close**, and `suggested_groups` uses that ordering. But `tokensKeys.js` is *not* fully consistent — Checkbox and Radio Button put focus before disabled, Primary/Secondary Button put disabled immediately after base. When adding subsections to an existing component, match that component's existing order; when adding a new component, look at the closest analogous one (e.g., a new button → look at Pagination Button / Input; a new form control → look at Checkbox / Radio) and match it rather than blindly applying the heuristic. Blank line between subsections.
 - `"density"` stays at the very bottom (it's a mode switch listed in `OTHER_VARIABLES`, not a token).
 - Place new components near related existing ones, not at the end — e.g., pagination-button keys go right after the `// Pagination Variables` section, notification keys go near other overlay/dialog components.
 

@@ -367,6 +367,25 @@ const tokensKeys = [
   "pagination-bar-horizontal-padding",
   "pagination-bar-vertical-padding",
 
+  // Pagination Button Variables
+  "pagination-button-border-color",
+  "pagination-button-foreground-color",
+  "pagination-button-background-color",
+
+  // Pagination Button Hover Variables
+  "pagination-button-hover-border-color",
+  "pagination-button-hover-foreground-color",
+  "pagination-button-hover-background-color",
+
+  // Pagination Button Disabled Variables
+  "pagination-button-disabled-foreground-color",
+  "pagination-button-disabled-background-color",
+
+  // Pagination Button Focus Variables
+  "pagination-button-focus-border-color",
+  "pagination-button-focus-foreground-color",
+  "pagination-button-focus-background-color",
+
   // Dialog Variables
   "dialog-semi-transparent-background-color",
   "dialog-semi-transparent-background-opacity",

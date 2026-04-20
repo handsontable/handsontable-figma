@@ -94,7 +94,7 @@ def component_prefix(key: str) -> str:
         trimmed.pop()
     # "border-color" / "background-color" etc — drop one more if needed.
     while trimmed and trimmed[-1] in {"border", "background", "foreground",
-                                      "icon", "accent", "border", "shadow"}:
+                                      "icon", "accent", "shadow"}:
         trimmed.pop()
     return "-".join(trimmed) or "-".join(parts[:-1]) or key
 

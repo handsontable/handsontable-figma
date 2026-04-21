@@ -2,3 +2,7 @@
 tokens.json
 /output
 /node_modules
+.claude/*
+!.claude/skills/
+!.claude/agents/
+!.claude/settings.json

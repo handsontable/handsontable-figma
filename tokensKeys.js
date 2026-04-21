@@ -25,7 +25,6 @@ const tokensKeys = [
   "gap-size",
   "icon-size",
   "table-transition",
-  "border-width",
 
   // Wrapper Variables
   "wrapper-border-width",
@@ -52,8 +51,6 @@ const tokensKeys = [
   "cell-vertical-padding",
   "cell-horizontal-border-color",
   "cell-vertical-border-color",
-  "cell-horizontal-border-width",
-  "cell-vertical-border-width",
 
   // Cell Selection Variables
   "cell-selection-border-color",
@@ -63,9 +60,6 @@ const tokensKeys = [
   "cell-success-background-color",
   "cell-error-background-color",
   "cell-read-only-background-color",
-  "cell-warning-background-color",
-  "cell-informational-background-color",
-  "cell-search-background-color",
 
   // Cell Autofill Variables
   "cell-autofill-size",
@@ -196,14 +190,6 @@ const tokensKeys = [
   "icon-button-active-hover-border-color",
   "icon-button-active-hover-background-color",
   "icon-button-active-hover-icon-color",
-
-  // Icon Button Disabled Variables
-  "icon-button-disabled-background-color",
-  "icon-button-disabled-icon-color",
-
-  // Icon Button Focus Variables
-  "icon-button-focus-background-color",
-  "icon-button-focus-icon-color",
 
   // Collapse Button Variables
   "collapse-button-border-radius",
@@ -400,14 +386,6 @@ const tokensKeys = [
   "pagination-button-focus-border-color",
   "pagination-button-focus-foreground-color",
   "pagination-button-focus-background-color",
-
-  // Notification Variables
-  "notification-background-color",
-  "notification-border-color",
-  "notification-foreground-color",
-  "notification-error-accent",
-  "notification-warning-accent",
-  "notification-success-accent",
 
   // Dialog Variables
   "dialog-semi-transparent-background-color",

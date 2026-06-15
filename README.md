@@ -1,14 +1,16 @@
 # Figma UI kit for Handsontable
 
+> **This repository is archived.** The theme generator has moved into the [handsontable](https://github.com/handsontable/handsontable) monorepo at [`handsontable/scripts/themes/figma`](https://github.com/handsontable/handsontable/tree/develop/handsontable/scripts/themes/figma).
+
 A tool for generating theme files from Figma design tokens.
 
 ## How to use
 
-This tool helps you generate Handsontable theme files from Figma design tokens.
+Use the generator in the monorepo — see its [README](https://github.com/handsontable/handsontable/tree/develop/handsontable/scripts/themes/figma#readme) for full instructions.
 
 ### Prerequisites
 
-- Node.js version 20 or higher
+- Node.js 22 (see the monorepo `.nvmrc`)
 - Access to Figma with design tokens
 
 ### Steps
@@ -30,18 +32,18 @@ This tool helps you generate Handsontable theme files from Figma design tokens.
 
 2. Set up the theme generator:
 
-    - Clone this repository
-    - Run `npm install`
-    - Place the exported `tokens.json` file in the root directory
+    - Clone the [handsontable](https://github.com/handsontable/handsontable) repository
+    - Place the exported `tokens.json` file at `handsontable/scripts/themes/figma/tokens.json` (gitignored)
 
 3. Generate theme files:
 
-    - Run `npm start` to generate the theme files
-    - The generated files will appear in the `/output` directory
+    - From the `handsontable/` package root, run `npm run generate:themes`
+    - The generated files are written to `handsontable/src/themes/static/`
+    - Review and commit the regenerated files under `src/themes/static/`
 
 ## Output Structure
 
-The tool generates the following files in the `/output` directory:
+The generator writes the following files to `handsontable/src/themes/static/`:
 
 ### CSS Files
 

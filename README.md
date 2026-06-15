@@ -1,6 +1,6 @@
 # Figma UI kit for Handsontable
 
-> **This repository is archived.** The theme generator has moved into the [handsontable](https://github.com/handsontable/handsontable) monorepo at [`handsontable/scripts/themes/figma`](https://github.com/handsontable/handsontable/tree/develop/handsontable/scripts/themes/figma).
+> **This repository is archived.** The theme generator has moved into the [handsontable](https://github.com/handsontable/handsontable) monorepo at [`handsontable/scripts/themes/figma`](https://github.com/handsontable/handsontable/tree/develop/handsontable/scripts/themes/figma). Starting with **Handsontable 18.0.0**, the generated themes live in that repo and are consumed via the Theme API or CSS class names.
 
 A tool for generating theme files from Figma design tokens.
 
@@ -69,6 +69,8 @@ Theme variants supported: `.ht-theme-[name]` (light), `.ht-theme-[name]-dark`, `
 - `variables/helpers/iconsMap.js` - Helper for generating icon CSS
 
 ## Usage
+
+Available from **Handsontable 18.0.0** onward.
 
 ### Option 1: JavaScript (Theme API)
 
